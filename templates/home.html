@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<h1>Vending machine managment: Logged in</h1>
+
+<form action="/logout" method="post">
+    <button type="submit" class="button btn-primary">Logout</button>
+</form>
+
+{% endblock %}

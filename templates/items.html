@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %} Items {% endblock %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Location</th>
+            <th>Quantity Remaining</th>
+            <th>Calories</th>
+            <th>Last Purchase</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <form action="/updateItem" method="post">
+                <td><code>{{item.id}}</code><input type="hidden" name="id" value="{{item.id}}"></td>
+                <td><input class="input" name="name" value="{{item.name}}"></input></td>
+                <td><input class="input" name="price" type="number" step="0.01" value="{{item.price}}"></input></td>
+                <td>
+                    <div class="select">
+                        <select value="{{item.location}}" name="location">
+                            <option value="-1">Out of machine</option>
+                            <option value="0" {% if item.location==0 %} selected {% endif %}>A1</option>
+                            <option value="1" {% if item.location==1 %} selected {% endif %}>A2</option>
+                            <option value="2" {% if item.location==2 %} selected {% endif %}>B1</option>
+                            <option value="3" {% if item.location==3 %} selected {% endif %}>B2</option>
+                        </select>
+                    </div>
+                </td>
+                <td><input class="input" type="number" name="qty_remain" value="{{item.qty_remain}}"></input></td>
+                <td><input class="input" type="number" name="calories" value="{{item.calories}}"></input></td>
+                <td>{{item.last_purchase}}</td>
+                <td><button type="submit" class="button">Go!</button></td>
+            </form>
+        </tr>
+        {% endfor %}
+        <tr>
+            <form action="/newItem" method="post">
+                <td></td>
+                <td><input class="input" name="name"></input></td>
+                <td><input class="input" type="number" step="0.01" name="price"></input></td>
+                <td>
+                    <div class="select">
+                        <select name="location">
+                            <option value="-1">Out of machine</option>
+                            <option value="0">A1</option>
+                            <option value="1">A2</option>
+                            <option value="2">B1</option>
+                            <option value="3">B2</option>
+                        </select>
+                    </div>
+                </td>
+                <td><input class="input" type="number" name="qty_remain"></input></td>
+                <td><input class="input" type="number" name="calories"></input></td>
+                <td></td>
+                <td><button type="submit" class="button">Create item!</button></td>
+            </form>
+        </tr>
+    </tbody>
+</table>
+
+
+
+{% endblock %}
