@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template, redirect, flash, request, session
 
-# from dispense import dispense
+from dispense import dispense
 
 import bcrypt
 import sqlite3
@@ -10,7 +10,7 @@ import datetime
 
 app = Flask(__name__)
 
-dispense = print
+# dispense = print
 
 
 class InsufficientFunds(Exception):
