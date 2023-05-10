@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template, redirect, flash, request, session
 
-from dispense import dispense
+# from dispense import dispense
 
 import bcrypt
 import sqlite3
@@ -10,7 +10,7 @@ import datetime
 
 app = Flask(__name__)
 
-# dispense = print
+dispense = print
 
 
 class InsufficientFunds(Exception):
@@ -176,7 +176,8 @@ def home():
         flash("You must login to access that page", "warning")
         return login()
     else:
-        return render_template("home.html")
+        balance = getUserBalance(session["id"])
+        return render_template("home.html", balance=format(balance/100, '.2f'))
 
 
 @app.route("/logout", methods=['POST'])
@@ -277,3 +278,24 @@ def dispense_now():
         return render_template("dispense_err.html", error="Out of stock")
     except NoSuchUser:
         return render_template("dispense_err.html", error="User not found")
+
+
+@app.route("/addFunds", methods=["POST"])
+def add_funds():
+    if not "id" in session:
+        flash("You must login to access that page", "warning")
+        return login()
+    elif (not "amount" in request.form):
+        flash("All fields are required", "warning")
+        return home()
+    else:
+        balance = getUserBalance(session["id"])
+        new_balance = balance + float(request.form["amount"])*100
+
+        c = db.cursor()
+        c.execute("UPDATE users SET balance = ? WHERE id = ?",
+                  [new_balance, session["id"]])
+        c.close()
+        db.commit()
+        flash("Balance updated", "success")
+        return home()

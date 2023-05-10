@@ -40,7 +40,7 @@
             </div>
 
             <div class="navbar-end">
-                <a href="/logout" class="navbar-item">Logout</a>
+                <a href="#" class="navbar-item" id="logout">Logout</a>
             </div>
         </div>
     </nav>
@@ -56,6 +56,10 @@
     {% endwith %}
 
     {% block content %}{% endblock %}
+
+    <script>
+        document.querySelector("#logout").addEventListener("click", () => fetch("/logout", { method: "POST" }).then(() => document.location.reload()))
+    </script>
 </body>
 
 </html>
