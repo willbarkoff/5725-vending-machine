@@ -1,4 +1,5 @@
 import sqlite3
+import pygame
 
 db = sqlite3.connect('database.db', check_same_thread=False)
 
@@ -19,10 +20,10 @@ def dispense(coil):
     print("Would despense from", coil)
 
 
-def getUserBalance(username):
+def getUserBalance(id):
     c = db.cursor()
     c.execute(
-        "SELECT balance FROM USERS where username = ?", [username])
+        "SELECT balance FROM USERS where id = ?", [id])
 
     result = c.fetchone()
 
@@ -66,3 +67,25 @@ def transact(username, coil):
 
     # Now the database has been updated, we can dispense
     dispense(coil)
+
+
+pygame.init()
+pygame.font.init()
+font25 = pygame.font.Font(pygame.font.get_default_font(), 25)
+font15 = pygame.font.Font(pygame.font.get_default_font(), 15)
+screen = pygame.display.set_mode((320, 240))
+running = True
+
+current_stage = "login"
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    if current_stage == "login":
+        screen.fill("black")
+        title = font25.render('Enter user ID', False, (255, 255, 255))
+        screen.blit(title, dest=(50, 0))
+
+    pygame.display.flip()

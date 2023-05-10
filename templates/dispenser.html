@@ -1,0 +1,22 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispenser</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+    <div class="container p-2">
+        <h1 class="is-size-3 has-text-centered">Enter user ID</h1>
+        <form action="/dispense" method="post">
+            <input class="input" type="text" name="dispense_user_id" placeholder="User id" autofoucus>
+            <input class="button mt-3 is-fullwidth is-primary" type="submit" value="Go!">
+        </form>
+    </div>
+</body>
+
+</html>
